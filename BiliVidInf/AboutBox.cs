@@ -13,5 +13,10 @@ namespace BiliVidInf
         {
             System.Diagnostics.Process.Start("https://github.com/Myitian/BiliVidInf");
         }
+
+        private void AboutBox_Load(object sender, System.EventArgs e)
+        {
+            BiliVidInfLicense_TB.Text = Properties.Resources.LICENSE;
+        }
     }
 }

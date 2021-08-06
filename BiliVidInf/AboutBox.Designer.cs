@@ -32,7 +32,7 @@
             this.BiliVidInfLicense = new System.Windows.Forms.TabPage();
             this.BiliVidInfLicense_TB = new System.Windows.Forms.TextBox();
             this.NewtonsoftJsonLicense = new System.Windows.Forms.TabPage();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.NewtonsoftJsonLicense_TB = new System.Windows.Forms.TextBox();
             this.LabelAuthor = new System.Windows.Forms.Label();
             this.LabelProjSite = new System.Windows.Forms.Label();
             this.LabelEmail = new System.Windows.Forms.Label();
@@ -54,7 +54,7 @@
             this.License.Name = "License";
             this.License.SelectedIndex = 0;
             this.License.Size = new System.Drawing.Size(510, 317);
-            this.License.TabIndex = 0;
+            this.License.TabIndex = 5;
             // 
             // BiliVidInfLicense
             // 
@@ -76,11 +76,11 @@
             this.BiliVidInfLicense_TB.ReadOnly = true;
             this.BiliVidInfLicense_TB.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.BiliVidInfLicense_TB.Size = new System.Drawing.Size(496, 285);
-            this.BiliVidInfLicense_TB.TabIndex = 2;
+            this.BiliVidInfLicense_TB.TabIndex = 6;
             // 
             // NewtonsoftJsonLicense
             // 
-            this.NewtonsoftJsonLicense.Controls.Add(this.textBox1);
+            this.NewtonsoftJsonLicense.Controls.Add(this.NewtonsoftJsonLicense_TB);
             this.NewtonsoftJsonLicense.Location = new System.Drawing.Point(4, 22);
             this.NewtonsoftJsonLicense.Name = "NewtonsoftJsonLicense";
             this.NewtonsoftJsonLicense.Padding = new System.Windows.Forms.Padding(3);
@@ -89,17 +89,17 @@
             this.NewtonsoftJsonLicense.Text = "Newtonsoft.Json许可证：MIT";
             this.NewtonsoftJsonLicense.UseVisualStyleBackColor = true;
             // 
-            // textBox1
+            // NewtonsoftJsonLicense_TB
             // 
-            this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox1.Location = new System.Drawing.Point(3, 3);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
-            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox1.Size = new System.Drawing.Size(496, 285);
-            this.textBox1.TabIndex = 1;
-            this.textBox1.Text = resources.GetString("textBox1.Text");
+            this.NewtonsoftJsonLicense_TB.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.NewtonsoftJsonLicense_TB.Location = new System.Drawing.Point(3, 3);
+            this.NewtonsoftJsonLicense_TB.Multiline = true;
+            this.NewtonsoftJsonLicense_TB.Name = "NewtonsoftJsonLicense_TB";
+            this.NewtonsoftJsonLicense_TB.ReadOnly = true;
+            this.NewtonsoftJsonLicense_TB.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.NewtonsoftJsonLicense_TB.Size = new System.Drawing.Size(496, 285);
+            this.NewtonsoftJsonLicense_TB.TabIndex = 7;
+            this.NewtonsoftJsonLicense_TB.Text = resources.GetString("NewtonsoftJsonLicense_TB.Text");
             // 
             // LabelAuthor
             // 
@@ -107,7 +107,7 @@
             this.LabelAuthor.Location = new System.Drawing.Point(17, 18);
             this.LabelAuthor.Name = "LabelAuthor";
             this.LabelAuthor.Size = new System.Drawing.Size(83, 12);
-            this.LabelAuthor.TabIndex = 1;
+            this.LabelAuthor.TabIndex = 0;
             this.LabelAuthor.Text = "作者：Myitian";
             // 
             // LabelProjSite
@@ -116,7 +116,7 @@
             this.LabelProjSite.Location = new System.Drawing.Point(17, 63);
             this.LabelProjSite.Name = "LabelProjSite";
             this.LabelProjSite.Size = new System.Drawing.Size(65, 12);
-            this.LabelProjSite.TabIndex = 2;
+            this.LabelProjSite.TabIndex = 3;
             this.LabelProjSite.Text = "项目地址：";
             // 
             // LabelEmail
@@ -125,7 +125,7 @@
             this.LabelEmail.Location = new System.Drawing.Point(17, 33);
             this.LabelEmail.Name = "LabelEmail";
             this.LabelEmail.Size = new System.Drawing.Size(185, 12);
-            this.LabelEmail.TabIndex = 3;
+            this.LabelEmail.TabIndex = 1;
             this.LabelEmail.Text = "Email：miaoyitian233@gmail.com";
             // 
             // LabelLicense
@@ -134,7 +134,7 @@
             this.LabelLicense.Location = new System.Drawing.Point(17, 48);
             this.LabelLicense.Name = "LabelLicense";
             this.LabelLicense.Size = new System.Drawing.Size(293, 12);
-            this.LabelLicense.TabIndex = 4;
+            this.LabelLicense.TabIndex = 2;
             this.LabelLicense.Text = "许可证：GNU General Public License v3.0 or later";
             // 
             // LinkLabelProjSite
@@ -143,7 +143,7 @@
             this.LinkLabelProjSite.Location = new System.Drawing.Point(77, 63);
             this.LinkLabelProjSite.Name = "LinkLabelProjSite";
             this.LinkLabelProjSite.Size = new System.Drawing.Size(227, 12);
-            this.LinkLabelProjSite.TabIndex = 5;
+            this.LinkLabelProjSite.TabIndex = 4;
             this.LinkLabelProjSite.TabStop = true;
             this.LinkLabelProjSite.Text = "https://github.com/Myitian/BiliVidInf";
             this.LinkLabelProjSite.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabelProjSite_LinkClicked);
@@ -167,6 +167,7 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "关于";
+            this.Load += new System.EventHandler(this.AboutBox_Load);
             this.License.ResumeLayout(false);
             this.BiliVidInfLicense.ResumeLayout(false);
             this.BiliVidInfLicense.PerformLayout();
@@ -182,7 +183,7 @@
         private System.Windows.Forms.TabControl License;
         private System.Windows.Forms.TabPage BiliVidInfLicense;
         private System.Windows.Forms.TabPage NewtonsoftJsonLicense;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox NewtonsoftJsonLicense_TB;
         private System.Windows.Forms.TextBox BiliVidInfLicense_TB;
         private System.Windows.Forms.Label LabelAuthor;
         private System.Windows.Forms.Label LabelProjSite;
