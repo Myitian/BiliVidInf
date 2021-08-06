@@ -155,16 +155,16 @@ namespace BiliVidInf
         {
             readok = false;
             Regex
-                BVUrlL = new Regex(@"^(https?://)?www\.bilibili\.com/video/[Bb][Vv][1-9a-km-zA-HJ-NP-Z]{10}(\S*)$?", RegexOptions.ExplicitCapture),
-                BVUrlS = new Regex(@"^(https?://)?b23\.tv/[Bb][Vv][1-9a-km-zA-HJ-NP-Z]{10}(\S*)?$", RegexOptions.ExplicitCapture),
-                AVUrlL = new Regex(@"^(https?://)?www\.bilibili\.com/video/[Aa][Vv]\d+(\S*)?$", RegexOptions.ExplicitCapture),
-                AVUrlS = new Regex(@"^(https?://)?b23\.tv/[Aa][Vv]\d+(\S*)?$", RegexOptions.ExplicitCapture),
-                BIDreg = new Regex(@"^[Bb][Vv][1-9a-km-zA-HJ-NP-Z]{10}$", RegexOptions.ExplicitCapture),
-                AIDreg = new Regex(@"^[Aa][Vv]\d+$", RegexOptions.ExplicitCapture),
-                BIDreg2 = new Regex(@"^[1-9a-km-zA-HJ-NP-Z]{10}$", RegexOptions.ExplicitCapture),
-                AIDreg2 = new Regex(@"^\d+$", RegexOptions.ExplicitCapture),
-                BID2 = new Regex(@"[Bb][Vv][1-9a-km-zA-HJ-NP-Z]{10}", RegexOptions.ExplicitCapture),
-                AID2 = new Regex(@"[Aa][Vv]\d+", RegexOptions.ExplicitCapture);
+                BVUrlL = new Regex(@"^(https?://)?www\.bilibili\.com/video/[Bb][Vv][1-9a-km-zA-HJ-NP-Z]{10}(\S*)$?"),
+                BVUrlS = new Regex(@"^(https?://)?b23\.tv/[Bb][Vv][1-9a-km-zA-HJ-NP-Z]{10}(\S*)?$"),
+                AVUrlL = new Regex(@"^(https?://)?www\.bilibili\.com/video/[Aa][Vv]\d+(\S*)?$"),
+                AVUrlS = new Regex(@"^(https?://)?b23\.tv/[Aa][Vv]\d+(\S*)?$"),
+                BIDreg = new Regex(@"^[Bb][Vv][1-9a-km-zA-HJ-NP-Z]{10}$"),
+                AIDreg = new Regex(@"^[Aa][Vv]\d+$"),
+                BIDreg2 = new Regex(@"^[1-9a-km-zA-HJ-NP-Z]{10}$"),
+                AIDreg2 = new Regex(@"^\d+$"),
+                BID2 = new Regex(@"[Bb][Vv][1-9a-km-zA-HJ-NP-Z]{10}"),
+                AID2 = new Regex(@"[Aa][Vv]\d+");
             string idi = ID.Text;
             bool matchok = false;
             if (BVUrlL.IsMatch(idi))
@@ -250,10 +250,10 @@ namespace BiliVidInf
 
                         pic = rb.data.pic;
                         picok = true;
-                        Regex picregjpg = new Regex(@"^http:\S+\.hdslb\.com/\S+\.jpg$", RegexOptions.ExplicitCapture);
-                        Regex picreggif = new Regex(@"^http:\S+\.hdslb\.com/\S+\.gif$", RegexOptions.ExplicitCapture);
-                        Regex picregpng = new Regex(@"^http:\S+\.hdslb\.com/\S+\.png$", RegexOptions.ExplicitCapture);
-                        Regex picregwebp = new Regex(@"^http:\S+\.hdslb\.com/\S+\.webp$", RegexOptions.ExplicitCapture);
+                        Regex picregjpg = new Regex(@"^http:\S+\.hdslb\.com/\S+\.jpg$");
+                        Regex picreggif = new Regex(@"^http:\S+\.hdslb\.com/\S+\.gif$");
+                        Regex picregpng = new Regex(@"^http:\S+\.hdslb\.com/\S+\.png$");
+                        Regex picregwebp = new Regex(@"^http:\S+\.hdslb\.com/\S+\.webp$");
                         if (pic == "http://static.hdslb.com/images/transparent.gif")
                         {
                             pic0.ImageLocation = pic;
@@ -272,7 +272,7 @@ namespace BiliVidInf
                         }
                         else if (picregwebp.IsMatch(pic))
                         {
-                            pic0.Image = Properties.Resource.DoNotSupportWEBP;
+                            pic0.Image = Properties.Resources.DoNotSupportWEBP;
                             //、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、、
                         }
 
@@ -303,7 +303,7 @@ namespace BiliVidInf
                         Regex faceregwebp = new Regex(@"^http:\S+\.hdslb\.com/\S+\.webp$");
                         if (faceregwebp.IsMatch(face))
                         {
-                            face0.Image = Properties.Resource.DoNotSupportWEBP;
+                            face0.Image = Properties.Resources.DoNotSupportWEBP;
                         }
                         else if (faceregjpg.IsMatch(face))
                         {
@@ -645,10 +645,10 @@ namespace BiliVidInf
         {
             if (readok && picok)
             {
-                Regex picregjpg = new Regex(@"^http://\S+\.hdslb\.com/\S+\.jpg$", RegexOptions.ExplicitCapture);
-                Regex picreggif = new Regex(@"^http://\S+\.hdslb\.com/\S+\.gif$", RegexOptions.ExplicitCapture);
-                Regex picregpng = new Regex(@"^http://\S+\.hdslb\.com/\S+\.png$", RegexOptions.ExplicitCapture);
-                Regex picregwebp = new Regex(@"^http://\S+\.hdslb\.com/\S+\.webp$", RegexOptions.ExplicitCapture);
+                Regex picregjpg = new Regex(@"^http://\S+\.hdslb\.com/\S+\.jpg$");
+                Regex picreggif = new Regex(@"^http://\S+\.hdslb\.com/\S+\.gif$");
+                Regex picregpng = new Regex(@"^http://\S+\.hdslb\.com/\S+\.png$");
+                Regex picregwebp = new Regex(@"^http://\S+\.hdslb\.com/\S+\.webp$");
                 if (picregwebp.IsMatch(pic))
                 {
                     picn = loc + locPIC + "webp";
