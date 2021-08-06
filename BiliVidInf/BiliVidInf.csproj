@@ -75,6 +75,7 @@
   <ItemGroup>
     <Reference Include="Newtonsoft.Json.Net20">
       <HintPath>..\packages\Newtonsoft.Json.3.5.8\lib\20\Newtonsoft.Json.Net20.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
