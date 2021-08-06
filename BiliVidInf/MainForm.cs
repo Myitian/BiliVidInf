@@ -728,7 +728,7 @@ namespace BiliVidInf
         private void GoToPG_Click(object sender, EventArgs e)
         {
             if (aid != "")
-                System.Diagnostics.Process.Start("http://b23.tv/" + aid);
+                System.Diagnostics.Process.Start("http://b23.tv/av" + aid);
         }
 
         private void SetDir_Click(object sender, EventArgs e)
