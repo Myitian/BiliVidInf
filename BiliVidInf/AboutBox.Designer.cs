@@ -77,7 +77,6 @@
             this.BiliVidInfLicense_TB.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.BiliVidInfLicense_TB.Size = new System.Drawing.Size(496, 285);
             this.BiliVidInfLicense_TB.TabIndex = 2;
-            this.BiliVidInfLicense_TB.Text = resources.GetString("BiliVidInfLicense_TB.Text");
             // 
             // NewtonsoftJsonLicense
             // 
@@ -85,7 +84,7 @@
             this.NewtonsoftJsonLicense.Location = new System.Drawing.Point(4, 22);
             this.NewtonsoftJsonLicense.Name = "NewtonsoftJsonLicense";
             this.NewtonsoftJsonLicense.Padding = new System.Windows.Forms.Padding(3);
-            this.NewtonsoftJsonLicense.Size = new System.Drawing.Size(576, 291);
+            this.NewtonsoftJsonLicense.Size = new System.Drawing.Size(502, 291);
             this.NewtonsoftJsonLicense.TabIndex = 1;
             this.NewtonsoftJsonLicense.Text = "Newtonsoft.Json许可证：MIT";
             this.NewtonsoftJsonLicense.UseVisualStyleBackColor = true;
@@ -98,7 +97,7 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
             this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.textBox1.Size = new System.Drawing.Size(570, 285);
+            this.textBox1.Size = new System.Drawing.Size(496, 285);
             this.textBox1.TabIndex = 1;
             this.textBox1.Text = resources.GetString("textBox1.Text");
             // 
