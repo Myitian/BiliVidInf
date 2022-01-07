@@ -31,7 +31,7 @@ namespace BiliVidInf
 
         private void Confirm_Click(object sender, EventArgs e)
         {
-            if(!(dir.Text.EndsWith(@"/")|| dir.Text.EndsWith(@"\")))
+            if (!(dir.Text.EndsWith(@"/") || dir.Text.EndsWith(@"\")))
             {
                 dir.Text += @"\";
             }
@@ -52,8 +52,8 @@ namespace BiliVidInf
             }
             else
             {
-                    Program.savedir = dir.Text;
-                    Close();
+                Program.savedir = dir.Text;
+                Close();
             }
         }
 

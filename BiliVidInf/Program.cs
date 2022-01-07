@@ -13,7 +13,8 @@ namespace BiliVidInf
         [STAThread]
         static void Main()
         {
-            AppDomain.CurrentDomain.AssemblyResolve += (sender, args) => {
+            AppDomain.CurrentDomain.AssemblyResolve += (sender, args) =>
+            {
                 string resourceName = "BiliVidInf." +
                 new AssemblyName(args.Name).Name + ".dll";
                 using (var stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(resourceName))
@@ -27,7 +28,7 @@ namespace BiliVidInf
                     return Assembly.Load(assemblyData);
                 }
             };
-            Application.EnableVisualStyles(); 
+            Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());
         }

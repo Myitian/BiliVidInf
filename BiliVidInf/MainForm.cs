@@ -4,9 +4,12 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Net;
+using System.Net.Security;
 using System.Runtime.InteropServices;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace BiliVidInf
@@ -54,7 +57,7 @@ namespace BiliVidInf
             RV0.Text = "评论/播放比：";
         }
 
-        string loc = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\Temp\BiliVidDat",
+        string loc = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\Temp\BiliVidInf",
                 locJSON = @"\TempJSON.json", locINI = @"\TempINI.ini", locPIC = @"\TempPIC.",
                 bvid = "",
                 aid = "",
@@ -153,68 +156,56 @@ namespace BiliVidInf
 
         private void GetVidDat_Click(object sender, EventArgs e)
         {
+            Err("");
             readok = false;
             Regex
-                BVUrlL = new Regex(@"^(https?://)?www\.bilibili\.com/video/[Bb][Vv][1-9a-km-zA-HJ-NP-Z]{10}(\S*)$?"),
-                BVUrlS = new Regex(@"^(https?://)?b23\.tv/[Bb][Vv][1-9a-km-zA-HJ-NP-Z]{10}(\S*)?$"),
-                AVUrlL = new Regex(@"^(https?://)?www\.bilibili\.com/video/[Aa][Vv]\d+(\S*)?$"),
-                AVUrlS = new Regex(@"^(https?://)?b23\.tv/[Aa][Vv]\d+(\S*)?$"),
-                BIDreg = new Regex(@"^[Bb][Vv][1-9a-km-zA-HJ-NP-Z]{10}$"),
-                AIDreg = new Regex(@"^[Aa][Vv]\d+$"),
-                BIDreg2 = new Regex(@"^[1-9a-km-zA-HJ-NP-Z]{10}$"),
-                AIDreg2 = new Regex(@"^\d+$"),
-                BID2 = new Regex(@"[Bb][Vv][1-9a-km-zA-HJ-NP-Z]{10}"),
-                AID2 = new Regex(@"[Aa][Vv]\d+");
-            string idi = ID.Text;
+                BID = new Regex(@"[Bb][Vv][1-9a-km-zA-HJ-NP-Z]{10}"),
+                AID = new Regex(@"[Aa][Vv]\d+"),
+                D = new Regex(@"\d+"),
+                B23 = new Regex(@"b23\.tv/\S+");
+            string idi = ID.Text.Replace('\\', '/');
             bool matchok = false;
-            if (BVUrlL.IsMatch(idi))
+            while (true)
             {
-                bvid = BID2.Match(idi).ToString();
-                matchok = true;
-                dlok1 = DownloadFile(@"https://api.bilibili.com/x/web-interface/view?bvid=" + bvid, loc + locJSON);
-            }
-            else if (BVUrlS.IsMatch(idi))
-            {
-                bvid = BID2.Match(idi).ToString();
-                matchok = true;
-                dlok1 = DownloadFile(@"https://api.bilibili.com/x/web-interface/view?bvid=" + bvid, loc + locJSON);
-            }
-            else if (AVUrlL.IsMatch(idi))
-            {
-                aid = AID2.Match(idi).ToString();
-                matchok = true;
-                dlok1 = DownloadFile(@"https://api.bilibili.com/x/web-interface/view?aid=" + aid.Substring(2), loc + locJSON);
-            }
-            else if (AVUrlS.IsMatch(idi))
-            {
-                aid = AID2.Match(idi).ToString();
-                matchok = true;
-                dlok1 = DownloadFile(@"https://api.bilibili.com/x/web-interface/view?aid=" + aid.Substring(2), loc + locJSON);
-            }
-            else if (BIDreg.IsMatch(idi))
-            {
-                matchok = true;
-                dlok1 = DownloadFile(@"https://api.bilibili.com/x/web-interface/view?bvid=" + ID.Text, loc + locJSON);
-            }
-            else if (AIDreg.IsMatch(idi))
-            {
-                matchok = true;
-                dlok1 = DownloadFile(@"https://api.bilibili.com/x/web-interface/view?aid=" + ID.Text.Substring(2), loc + locJSON);
-            }
-            else if (BIDreg2.IsMatch(idi))
-            {
-                matchok = true;
-                dlok1 = DownloadFile(@"https://api.bilibili.com/x/web-interface/view?bvid=BV" + ID.Text, loc + locJSON);
-            }
-            else if (AIDreg2.IsMatch(idi))
-            {
-                matchok = true;
-                dlok1 = DownloadFile(@"https://api.bilibili.com/x/web-interface/view?aid=" + ID.Text, loc + locJSON);
-            }
-            else
-            {
-                err.ForeColor = Color.FromArgb(255, 0, 0);
-                err.Text = "地址错误！";
+
+                Match m = BID.Match(idi);
+                if (m.Success)
+                {
+                    matchok = true;
+                    dlok1 = DownloadFile($"https://api.bilibili.com/x/web-interface/view?bvid={m.Value}", loc + locJSON);
+                    break;
+                }
+                else
+                {
+                    m = AID.Match(idi);
+                    if (m.Success)
+                    {
+                        matchok = true;
+                        dlok1 = DownloadFile($"https://api.bilibili.com/x/web-interface/view?aid={D.Match(m.Value).Value}", loc + locJSON);
+                        break;
+                    }
+                    else
+                    {
+                        m = B23.Match(idi);
+                        if (m.Success)
+                        {
+                            HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://" + m.Value);
+                            request.AllowAutoRedirect = false;
+                            request.Method = "GET";
+                            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
+                            idi = response.Headers["Location"];
+                            response.Close();
+                            request.Abort();
+                        }
+                        else
+                        {
+                            err.ForeColor = Color.FromArgb(255, 0, 0);
+                            err.Text = "地址错误！";
+                            matchok = false;
+                            break;
+                        }
+                    }
+                }
             }
             if (matchok)
             {
@@ -492,18 +483,64 @@ namespace BiliVidInf
                 else
                 {
                     err.ForeColor = Color.FromArgb(255, 0, 0);
-                    err.Text = "未知错误！";
+                    err.Text = string.IsNullOrEmpty(ErrString) ? "未知错误！" : ErrString;
+                    ErrString = string.Empty;
                 }
             }
         }
 
+
+        /// <summary>
+        /// 验证证书
+        /// </summary>
+        /// <remarks>https://www.cnblogs.com/arxive/p/7073444.html</remarks>
+        private static bool CheckValidationResult(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors errors)
+        {
+            return errors == SslPolicyErrors.None;
+        }
+        /// <summary>  
+        /// 创建GET方式的HTTP请求  
+        /// </summary>  
+        /// <remarks>https://www.cnblogs.com/arxive/p/7073444.html</remarks>
+        public static Stream CreateGetHttpResponse(string url, int timeout, string userAgent, bool keepAlive, CookieCollection cookies, out HttpWebRequest req)
+        {
+            HttpWebRequest request = null;
+            if (url.StartsWith("https", StringComparison.OrdinalIgnoreCase))
+            {
+                //对服务端证书进行有效性校验（非第三方权威机构颁发的证书，如自己生成的，不进行验证，这里返回true）
+                ServicePointManager.ServerCertificateValidationCallback = new RemoteCertificateValidationCallback(CheckValidationResult);
+                request = WebRequest.Create(url) as HttpWebRequest;
+                request.ProtocolVersion = HttpVersion.Version10;    //http版本，默认是1.1,这里设置为1.0
+            }
+            else
+            {
+                request = WebRequest.Create(url) as HttpWebRequest;
+            }
+            request.AutomaticDecompression = DecompressionMethods.GZip;
+
+            request.Method = "GET";
+
+            //设置代理UserAgent和超时
+            request.UserAgent = userAgent;
+            request.Timeout = timeout;
+            request.KeepAlive = keepAlive;
+            if (cookies != null)
+            {
+                request.CookieContainer = new CookieContainer();
+                request.CookieContainer.Add(cookies);
+            }
+            Stream s = request.GetResponse().GetResponseStream();
+            req = request;
+            return s;
+        }
+        string ErrString = string.Empty;
         private bool DownloadFile(string URL, string filename)
         {
             try
             {
-                HttpWebRequest Myrq = (HttpWebRequest)WebRequest.Create(URL);
-                HttpWebResponse myrp = (HttpWebResponse)Myrq.GetResponse();
-                Stream st = myrp.GetResponseStream();
+                GC.Collect();
+                Thread.Sleep(1);
+                Stream st = CreateGetHttpResponse(URL, 30000, "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101 Firefox/91.0", false, null, out HttpWebRequest req);
                 Stream so = new FileStream(filename, FileMode.Create);
                 byte[] by = new byte[1024];
                 int osize = st.Read(by, 0, by.Length);
@@ -512,20 +549,23 @@ namespace BiliVidInf
                     so.Write(by, 0, osize);
                     osize = st.Read(by, 0, by.Length);
                 }
+                req.Abort();
                 so.Close();
                 st.Close();
-                myrp.Close();
-                Myrq.Abort();
                 return true;
             }
-            catch
+            catch (Exception ee)
             {
+                ErrString = ee.Message;
+                Console.WriteLine(ee.Message);
+                Console.WriteLine(ee.StackTrace);
                 return false;
             }
         }
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            ServicePointManager.DefaultConnectionLimit = 5000;
             if (!Directory.Exists(loc))//如果不存在就创建 dir 文件夹  
                 Directory.CreateDirectory(loc);
             DV2.Parent = DV1;
